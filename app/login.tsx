@@ -1,13 +1,32 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function LoginScreen() {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please fill out all fields.');
+      return;
+    }
+
+    try {
+      // Simulate login and store info
+      await AsyncStorage.setItem('userName', email.split('@')[0]);
+      await AsyncStorage.setItem('userEmail', email);
+      router.replace('/(tabs)');
+    } catch (error) {
+      Alert.alert('Login Failed', 'Could not save login info.');
+    }
+  };
 
   return (
     <View className="flex-1 bg-[#0A0E21] px-6 py-12">
-      {/* Back Button */}
       <TouchableOpacity
         onPress={() => router.back()}
         className="absolute top-12 left-6 z-10"
@@ -16,7 +35,6 @@ export default function LoginScreen() {
       </TouchableOpacity>
 
       <View className="flex-1 justify-center">
-        {/* Heading */}
         <View className="items-center mb-10 mt-10">
           <Text className="text-4xl font-extrabold text-[#6EC1E4] mb-2">
             Welcome Back
@@ -26,7 +44,6 @@ export default function LoginScreen() {
           </Text>
         </View>
 
-        {/* Form */}
         <View>
           <Text className="text-white font-semibold mb-1">Email</Text>
           <TextInput
@@ -35,6 +52,8 @@ export default function LoginScreen() {
             className="bg-[#1D1E33] text-white rounded-xl px-4 py-3 mb-5"
             keyboardType="email-address"
             autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
           />
 
           <Text className="text-white font-semibold mb-1">Password</Text>
@@ -43,18 +62,18 @@ export default function LoginScreen() {
             placeholderTextColor="#ccc"
             secureTextEntry
             className="bg-[#1D1E33] text-white rounded-xl px-4 py-3 mb-8"
+            value={password}
+            onChangeText={setPassword}
           />
         </View>
 
-        {/* Login Button */}
         <TouchableOpacity
           className="bg-[#6EC1E4] py-4 rounded-xl items-center shadow-lg mb-6"
-          onPress={() => router.replace('/(tabs)')}
+          onPress={handleLogin}
         >
           <Text className="text-white text-lg font-bold">Login</Text>
         </TouchableOpacity>
 
-        {/* Footer */}
         <TouchableOpacity onPress={() => router.push('/signup')}>
           <Text className="text-[#6EC1E4] text-center underline">
             Don't have an account? Sign up

@@ -1,9 +1,29 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignUp = async () => {
+    if (!name || !email || !password) {
+      Alert.alert('Error', 'Please fill in all fields.');
+      return;
+    }
+
+    try {
+      await AsyncStorage.setItem('userName', name);
+      await AsyncStorage.setItem('userEmail', email);
+      router.replace('/(tabs)');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to save user information.');
+    }
+  };
 
   return (
     <View className="flex-1 bg-[#0A0E21] px-6 py-12">
@@ -36,6 +56,8 @@ export default function SignUpScreen() {
             <TextInput
               placeholder="Enter your name"
               placeholderTextColor="#ccc"
+              value={name}
+              onChangeText={setName}
               className="bg-[#1D1E33] text-white rounded-xl px-4 py-3 mb-5"
             />
 
@@ -43,14 +65,18 @@ export default function SignUpScreen() {
             <TextInput
               placeholder="Enter your email"
               placeholderTextColor="#ccc"
-              className="bg-[#1D1E33] text-white rounded-xl px-4 py-3 mb-5"
+              value={email}
+              onChangeText={setEmail}
               keyboardType="email-address"
+              className="bg-[#1D1E33] text-white rounded-xl px-4 py-3 mb-5"
             />
 
             <Text className="text-white font-semibold mb-1">Password</Text>
             <TextInput
               placeholder="Enter your password"
               placeholderTextColor="#ccc"
+              value={password}
+              onChangeText={setPassword}
               secureTextEntry
               className="bg-[#1D1E33] text-white rounded-xl px-4 py-3 mb-8"
             />
@@ -59,7 +85,7 @@ export default function SignUpScreen() {
           {/* Button */}
           <TouchableOpacity
             className="bg-[#6EC1E4] py-4 rounded-xl items-center shadow-lg mb-6"
-            onPress={() => router.replace('/(tabs)')}
+            onPress={handleSignUp}
           >
             <Text className="text-white text-lg font-bold">Get Started</Text>
           </TouchableOpacity>

@@ -16,15 +16,21 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [userType, setUserType] = useState<'student' | 'club' | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
 
   useEffect(() => {
-    const fetchUserType = async () => {
+    const fetchUserData = async () => {
       const storedType = await AsyncStorage.getItem('userType');
+      const storedName = await AsyncStorage.getItem('userName');
+      const storedEmail = await AsyncStorage.getItem('userEmail');
       if (storedType === 'student' || storedType === 'club') {
         setUserType(storedType);
+        if (storedName) setUserName(storedName);
+        if (storedEmail) setUserEmail(storedEmail);
       }
     };
-    fetchUserType();
+    fetchUserData();
   }, []);
 
   const pickImage = async () => {
@@ -60,6 +66,12 @@ export default function ProfileScreen() {
     }
   };
 
+  const handleLogout = async () => {
+    Alert.alert('Logging Out', 'You will be returned to the role selection screen.');
+    await AsyncStorage.clear();
+    router.replace('/select-role');
+  };
+
   if (!userType) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#0A0E21' }}>
@@ -67,18 +79,6 @@ export default function ProfileScreen() {
       </View>
     );
   }
-
-  const studentData = {
-    name: 'Mariam Al Said',
-    email: '25-0123@student.gutech.edu.om',
-  };
-
-  const clubData = {
-    name: 'Business Club',
-    email: 'BusinessClub@club.gutech.edu.om',
-  };
-
-  const userData = userType === 'student' ? studentData : clubData;
 
   return (
     <ScrollView
@@ -125,10 +125,10 @@ export default function ProfileScreen() {
 
       {/* Name + Email */}
       <Text style={{ fontSize: 20, fontWeight: '700', color: 'white', marginBottom: 4 }}>
-        {userData.name}
+        {userName}
       </Text>
       <Text style={{ fontSize: 14, color: '#aaa', marginBottom: 24 }}>
-        {userData.email}
+        {userEmail}
       </Text>
 
       {/* Club-Only Menu */}
@@ -150,7 +150,7 @@ export default function ProfileScreen() {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => alert('Logging out...')}
+        onPress={handleLogout}
         style={{ backgroundColor: '#6EC1E4', borderRadius: 12, padding: 16, marginTop: 12, width: '85%' }}
       >
         <Text style={{ color: '#0A0E21', fontWeight: '700', textAlign: 'center' }}>Log Out</Text>
