@@ -8,6 +8,11 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
    ```bash
    npm install
+npm install @react-native-picker/picker
+
+npm install @react-native-async-storage/async-storage
+npx expo install expo-image-picker
+npx expo install @react-native-community/datetimepicker
    ```
 
 2. Start the app
@@ -32,31 +37,3 @@ When you're ready, run:
 ```bash
 npm run reset-project
 ```
-Welcome to your Expo app 👋
-This is an Expo project created with create-expo-app.
-
-Get started
-1. Install dependencies
-
-npm install
-npm install @react-native-picker/picker
-npm install @react-native-async-storage/async-storage
-npx expo install expo-image-picker
-npx expo install @react-native-community/datetimepicker
-
-2. Start the app
-
-npx expo start
-In the output, you'll find options to open the app in a
-
-development build
-Android emulator
-iOS simulator
-Expo Go, a limited sandbox for trying out app development with Expo
-You can start developing by editing the files inside the app directory. This project uses file-based routing.
-
-Get a fresh project
-When you're ready, run:
-
-npm run reset-project
-This command will move the starter code to the app-example directory and create a blank app directory where you can start developing.
