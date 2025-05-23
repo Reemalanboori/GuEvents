@@ -32,19 +32,31 @@ When you're ready, run:
 ```bash
 npm run reset-project
 ```
+Welcome to your Expo app 👋
+This is an Expo project created with create-expo-app.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Get started
+1. Install dependencies
 
-## Learn more
+npm install
+npm install @react-native-picker/picker
+npm install @react-native-async-storage/async-storage
+npx expo install expo-image-picker
+npx expo install @react-native-community/datetimepicker
 
-To learn more about developing your project with Expo, look at the following resources:
+2. Start the app
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+npx expo start
+In the output, you'll find options to open the app in a
 
-## Join the community
+development build
+Android emulator
+iOS simulator
+Expo Go, a limited sandbox for trying out app development with Expo
+You can start developing by editing the files inside the app directory. This project uses file-based routing.
 
-Join our community of developers creating universal apps.
+Get a fresh project
+When you're ready, run:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+npm run reset-project
+This command will move the starter code to the app-example directory and create a blank app directory where you can start developing.
